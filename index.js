@@ -70,11 +70,11 @@ const deleteItem = function (item) {
   data = data.filter((item) => {
     return item.title != title;
   });
-  if (currentEditItem) clearForm();
+  if (currentEditItem == item) clearForm();
   updateLocalStorage(data);
 };
 
-const addListItem = function ({ title, quantity }) {
+const addListItemUtil = function ({ title, quantity }) {
   listItem = document.createElement("li");
   listItem.classList.add("list-item");
   listItem.innerHTML = `
@@ -89,20 +89,10 @@ const addListItem = function ({ title, quantity }) {
   return listItem;
 };
 
-const renderList = function () {
-  if (!data) return;
-  data.forEach((item) => {
-    addListItem(item);
-  });
-};
-
-renderList();
-
-addItemButton.addEventListener("click", () => {
+const addItem = function () {
   const title = itemTitle.value;
   const quantity = parseInt(itemQuantity.value);
-  const newItem = addListItem({ title, quantity });
-  console.log(newItem.querySelector(".btn_delete-item"));
+  const newItem = addListItemUtil({ title, quantity });
   newItem
     .querySelector(".btn_delete-item")
     .addEventListener("click", () => deleteItem(newItem));
@@ -112,6 +102,19 @@ addItemButton.addEventListener("click", () => {
   data.push({ title, quantity });
   updateLocalStorage(data);
   clearForm();
+};
+
+const renderList = function () {
+  if (!data) return;
+  data.forEach((item) => {
+    addListItemUtil(item);
+  });
+};
+
+renderList();
+
+addItemButton.addEventListener("click", () => {
+  addItem();
 });
 
 updateItemButton.addEventListener("click", () => {
@@ -129,4 +132,14 @@ editButtons.forEach((btn, index) => {
   btn.addEventListener("click", () => {
     editItem(btn.parentNode, index);
   });
+});
+
+document.addEventListener("keyup", (event) => {
+  if (event.keyCode == 13) {
+    if (currentEditItem) {
+      updateItem();
+    } else {
+      addItem();
+    }
+  }
 });

@@ -23,13 +23,16 @@ body {
 .container {
   max-width: 1000px;
   margin: auto;
-  margin-top: 20px;
   height: 90vh;
   outline: auto;
   display: grid;
   grid-template-columns: 1fr 2fr;
   padding: 2rem;
   gap: 1rem;
+}
+
+#list-container {
+  overflow: scroll;
 }
 
 #add-item-box,
@@ -62,5 +65,6 @@ body {
   .container {
     height: 100vh;
     grid-template-columns: 1fr;
+    grid-template-rows: 1fr fitcontent(1fr);
   }
 }
