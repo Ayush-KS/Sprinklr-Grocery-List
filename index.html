@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grocery List</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script defer src="./index.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="add-item-container">
+        <div class="box-title">Add Grocery Item</div>
+        <div id="add-item-box">
+          <div class="row">
+            <label for="">Item Name</label>
+            <br />
+            <input type="text" id="form_item-title" />
+          </div>
+          <div class="row">
+            <label for="">Quantity</label>
+            <br />
+            <input type="text" id="form_item-quantity" />
+          </div>
+          <div class="row">
+            <button id="btn_add-item">Add Item</button>
+            <button id="btn_update-item" class="hidden">Update Item</button>
+          </div>
+        </div>
+      </div>
+      <div id="list-container">
+        <div class="box-title">Grocery List</div>
+        <ul id="list-box">
+          <!-- <li class="list-item">
+            <div class="item-details">
+              <div class="item-title">Toilet Paper</div>
+              <div class="item-quantity">x10</div>
+            </div>
+            <button class="edit-item">Edit</button>
+            <button class="delete-item">Delete</button>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
