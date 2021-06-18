@@ -22,7 +22,7 @@ const fetchData = function () {
   //   },
   // ];
   const data = JSON.parse(localStorage.getItem("data"));
-  return data;
+  return data ? data : [];
 };
 
 let data = fetchData();
@@ -90,6 +90,7 @@ const addListItem = function ({ title, quantity }) {
 };
 
 const renderList = function () {
+  if (!data) return;
   data.forEach((item) => {
     addListItem(item);
   });
