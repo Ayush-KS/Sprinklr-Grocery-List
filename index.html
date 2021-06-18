@@ -9,9 +9,10 @@
     <script defer src="./index.js"></script>
   </head>
   <body>
+    <header>Sprinklr's Groceries</header>
     <div class="container">
       <div id="add-item-container">
-        <div class="box-title">Add Grocery Item</div>
+        <div class="box-title">Add Item</div>
         <div id="add-item-box">
           <div class="row">
             <label for="">Item Name</label>
@@ -21,7 +22,7 @@
           <div class="row">
             <label for="">Quantity</label>
             <br />
-            <input type="text" id="form_item-quantity" />
+            <input type="number" id="form_item-quantity" />
           </div>
           <div class="row">
             <button id="btn_add-item">Add Item</button>
@@ -31,16 +32,18 @@
       </div>
       <div id="list-container">
         <div class="box-title">Grocery List</div>
-        <ul id="list-box">
-          <!-- <li class="list-item">
-            <div class="item-details">
-              <div class="item-title">Toilet Paper</div>
-              <div class="item-quantity">x10</div>
-            </div>
-            <button class="edit-item">Edit</button>
-            <button class="delete-item">Delete</button>
-          </li> -->
-        </ul>
+        <div id="list-box-wrapper">
+          <ul id="list-box">
+            <!-- <li class="list-item">
+              <div class="item-details">
+                <div class="item-title">Toilet Paper</div>
+                <div class="item-quantity">x10</div>
+              </div>
+              <button class="edit-item">Edit</button>
+              <button class="delete-item">Delete</button>
+            </li> -->
+          </ul>
+        </div>
       </div>
     </div>
   </body>

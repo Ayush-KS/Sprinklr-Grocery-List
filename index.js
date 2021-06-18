@@ -26,7 +26,6 @@ const fetchData = function () {
 };
 
 let data = fetchData();
-console.log(data);
 
 const updateLocalStorage = function () {
   localStorage.setItem("data", JSON.stringify(data));
@@ -48,7 +47,7 @@ const editItem = function (item) {
 const updateItem = function () {
   addItemButton.classList.remove("hidden");
   updateItemButton.classList.add("hidden");
-  const title = itemTitle.value;
+  const title = itemTitle.value.trim();
   const quantity = parseInt(itemQuantity.value);
   data = data.map((item) => {
     if (item.title == currentEditItem.querySelector(".item-title").innerHTML) {
@@ -67,9 +66,12 @@ const updateItem = function () {
 const deleteItem = function (item) {
   title = item.querySelector(".item-title").innerText;
   listBox.removeChild(item);
-  data = data.filter((item) => {
-    return item.title != title;
+  console.log(data);
+  console.log(title);
+  data = data.filter((listItem) => {
+    return listItem.title != title;
   });
+  console.log(data);
   if (currentEditItem == item) clearForm();
   updateLocalStorage(data);
 };
@@ -90,7 +92,7 @@ const addListItemUtil = function ({ title, quantity }) {
 };
 
 const addItem = function () {
-  const title = itemTitle.value;
+  const title = itemTitle.value.trim();
   const quantity = parseInt(itemQuantity.value);
   const newItem = addListItemUtil({ title, quantity });
   newItem
