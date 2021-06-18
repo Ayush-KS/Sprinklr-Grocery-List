@@ -15,6 +15,7 @@ body {
 }
 .box-title {
   font-size: 1.5rem;
+  margin-bottom: 10px;
   text-align: center;
 }
 
@@ -57,14 +58,14 @@ button {
 }
 
 /* Form */
+label {
+  margin-bottom: 10px;
+}
 input {
   color: black;
-  border-width: 1px;
+  border: none;
   border-radius: 8px;
-}
-
-input:hover {
-  border-color: #1c6cfd;
+  height: 1.5rem;
 }
 
 /* Presentation Styles */
@@ -86,7 +87,7 @@ header {
   height: 90vh;
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-template-rows: min-content;
+  grid-template-rows: minmax(0, 1fr);
   padding: 2rem;
   gap: 1rem;
 }
@@ -114,12 +115,18 @@ header {
 #list-container {
   /* background-color: rgba(100%, 100%, 100%, 15%); */
   background-color: #393e46;
-}
-#list-box {
+  max-height: inherit;
   display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+#list-box-wrapper {
+  max-height: inherit;
+  overflow: scroll;
 }
 
 #list-box {
+  display: grid;
   margin: 0;
   list-style-type: none;
   padding: 1rem;
@@ -149,7 +156,7 @@ header {
   .container {
     height: 95vh;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr fitcontent(1fr);
+    grid-template-rows: 1fr minmax(0, 2.5fr);
   }
 }
 

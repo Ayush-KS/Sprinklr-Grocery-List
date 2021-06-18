@@ -45,10 +45,18 @@ const editItem = function (item) {
 };
 
 const updateItem = function () {
-  addItemButton.classList.remove("hidden");
-  updateItemButton.classList.add("hidden");
   const title = itemTitle.value.trim();
   const quantity = parseInt(itemQuantity.value);
+  if (!title) {
+    alert("Please enter the title!");
+    return;
+  }
+  if (!quantity) {
+    alert("Please enter the quantity!");
+    return;
+  }
+  addItemButton.classList.remove("hidden");
+  updateItemButton.classList.add("hidden");
   data = data.map((item) => {
     if (item.title == currentEditItem.querySelector(".item-title").innerHTML) {
       item.title = title;
@@ -94,6 +102,14 @@ const addListItemUtil = function ({ title, quantity }) {
 const addItem = function () {
   const title = itemTitle.value.trim();
   const quantity = parseInt(itemQuantity.value);
+  if (!title) {
+    alert("Please enter the title!");
+    return;
+  }
+  if (!quantity) {
+    alert("Please enter the quantity!");
+    return;
+  }
   const newItem = addListItemUtil({ title, quantity });
   newItem
     .querySelector(".btn_delete-item")
