@@ -5,27 +5,10 @@ const itemTitle = document.querySelector("#form_item-title");
 const itemQuantity = document.querySelector("#form_item-quantity");
 
 let currentEditItem = null;
-
-const fetchData = function () {
-  // const data = [
-  //   {
-  //     title: "Toilet Paper",
-  //     quantity: 10,
-  //   },
-  //   {
-  //     title: "Orange Juice",
-  //     quantity: 5,
-  //   },
-  //   {
-  //     title: "Towel",
-  //     quantity: 1,
-  //   },
-  // ];
-  const data = JSON.parse(localStorage.getItem("data"));
-  return data ? data : [];
-};
-
-let data = fetchData();
+let data = JSON.parse(localStorage.getItem("data"));
+if (!data) {
+  data = [];
+}
 
 const updateLocalStorage = function () {
   localStorage.setItem("data", JSON.stringify(data));
@@ -34,6 +17,14 @@ const updateLocalStorage = function () {
 const clearForm = function () {
   itemTitle.value = "";
   itemQuantity.value = "";
+};
+
+const findIndex = function (item) {
+  let index = 0;
+  while ((item = item.previousSibling) != null) {
+    index++;
+  }
+  return index;
 };
 
 const setAddButton = function () {
@@ -46,7 +37,7 @@ const setEditButton = function () {
   updateItemButton.classList.remove("hidden");
 };
 
-const editItem = function (item) {
+const beginEdit = function (item) {
   setEditButton();
   currentEditItem = item;
   itemTitle.value = item.querySelector(".item-title").innerHTML;
@@ -65,27 +56,20 @@ const updateItem = function () {
     return;
   }
 
-  setAddButton();
-  data = data.map((item) => {
-    if (item.title == currentEditItem.querySelector(".item-title").innerHTML) {
-      item.title = title;
-      item.quantity = quantity;
-    }
-    return item;
-  });
+  data[findIndex(currentEditItem)] = { title, quantity };
   currentEditItem.querySelector(".item-title").innerHTML = title;
   currentEditItem.querySelector(".item-quantity").innerHTML = "x" + quantity;
+
   updateLocalStorage();
   clearForm();
+  setAddButton();
   currentEditItem = null;
 };
 
 const deleteItem = function (item) {
-  title = item.querySelector(".item-title").innerText;
+  data.splice(findIndex(item), 1);
   listBox.removeChild(item);
-  data = data.filter((listItem) => {
-    return listItem.title != title;
-  });
+
   if (currentEditItem == item) {
     setAddButton();
     clearForm();
@@ -93,7 +77,7 @@ const deleteItem = function (item) {
   updateLocalStorage(data);
 };
 
-const addListItemUtil = function ({ title, quantity }) {
+const createItemNode = function ({ title, quantity }) {
   listItem = document.createElement("li");
   listItem.classList.add("list-item");
   listItem.innerHTML = `
@@ -108,6 +92,15 @@ const addListItemUtil = function ({ title, quantity }) {
   return listItem;
 };
 
+const addListeners = function (item) {
+  item
+    .querySelector(".btn_delete-item")
+    .addEventListener("click", () => deleteItem(item));
+  item
+    .querySelector(".btn_edit-item")
+    .addEventListener("click", () => beginEdit(item));
+};
+
 const addItem = function () {
   const title = itemTitle.value.trim();
   const quantity = parseInt(itemQuantity.value);
@@ -115,17 +108,11 @@ const addItem = function () {
     alert("Please enter the title!");
     return;
   }
-  if (!quantity) {
-    alert("Please enter the quantity!");
+  if (!quantity || quantity < 0) {
+    alert("Please enter a valid quantity!");
     return;
   }
-  const newItem = addListItemUtil({ title, quantity });
-  newItem
-    .querySelector(".btn_delete-item")
-    .addEventListener("click", () => deleteItem(newItem));
-  newItem
-    .querySelector(".btn_edit-item")
-    .addEventListener("click", () => editItem(newItem));
+  addListeners(createItemNode({ title, quantity }));
   data.push({ title, quantity });
   updateLocalStorage(data);
   clearForm();
@@ -133,7 +120,7 @@ const addItem = function () {
 
 const renderList = function () {
   data.forEach((item) => {
-    addListItemUtil(item);
+    addListeners(createItemNode(item));
   });
 };
 
@@ -145,19 +132,6 @@ addItemButton.addEventListener("click", () => {
 
 updateItemButton.addEventListener("click", () => {
   updateItem();
-});
-
-const editButtons = document.querySelectorAll(".btn_edit-item");
-const deleteButtons = document.querySelectorAll(".btn_delete-item");
-deleteButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    deleteItem(btn.parentNode);
-  });
-});
-editButtons.forEach((btn, index) => {
-  btn.addEventListener("click", () => {
-    editItem(btn.parentNode, index);
-  });
 });
 
 document.addEventListener("keyup", (event) => {
