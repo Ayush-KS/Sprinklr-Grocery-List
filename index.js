@@ -59,7 +59,7 @@ const beginEdit = function (item) {
 // Updates the selected item
 const updateItem = function () {
   const title = itemTitle.value.trim();
-  const quantity = parseInt(itemQuantity.value);
+  const quantity = parseFloat(itemQuantity.value);
   if (!title) {
     alert("Please enter the title!");
     return;
@@ -120,15 +120,15 @@ const addListeners = function (item) {
 // Adds the selected item
 const addItem = function () {
   const title = itemTitle.value.trim();
-  const quantity = parseInt(itemQuantity.value);
-  if (!title) {
-    alert("Please enter the title!");
-    return;
-  }
-  if (!quantity || quantity < 0) {
-    alert("Please enter a valid quantity!");
-    return;
-  }
+  const quantity = parseFloat(itemQuantity.value);
+  // if (!title) {
+  //   alert("Please enter the title!");
+  //   return;
+  // }
+  // if (!quantity || quantity < 0) {
+  //   alert("Please enter a valid quantity!");
+  //   return;
+  // }
   addListeners(createItemNode({ title, quantity }));
   data.push({ title, quantity });
   updateLocalStorage(data);

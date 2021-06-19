@@ -22,7 +22,7 @@ body {
 /* Buttons */
 button {
   width: 100%;
-  height: 50px;
+  height: 3rem;
   cursor: pointer;
   border-radius: 8px;
   color: white;
@@ -59,13 +59,30 @@ button {
 
 /* Form */
 label {
-  margin-bottom: 10px;
+  font-weight: 400;
+  font-size: 1rem;
+  padding-left: 15px;
+  padding-bottom: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  display: block;
 }
 input {
-  color: black;
-  border: none;
-  border-radius: 8px;
   height: 1.5rem;
+  width: 100%;
+  height: 2rem;
+  padding-left: 15px;
+  border: none;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.2);
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+:focus {
+  outline: none;
 }
 
 /* Presentation Styles */
@@ -94,8 +111,8 @@ header {
 .container > div {
   padding: 1rem;
 }
-/* Add Item Container */
 
+/* Add Item Container */
 #add-item-box {
   padding: 1rem;
 }
@@ -112,7 +129,6 @@ header {
 
 /* List Container */
 #list-container {
-  /* background-color: rgba(100%, 100%, 100%, 15%); */
   background-color: #393e46;
   max-height: inherit;
   display: grid;
@@ -151,11 +167,18 @@ header {
   color: #bb86fc;
 }
 
+/* Media Queries */
 @media only screen and (max-width: 1000px) {
   .container {
+    max-width: 700px;
     height: 95vh;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr minmax(0, 2.5fr);
+    padding: 1rem;
+    gap: 0rem;
+  }
+  button {
+    height: 2.5rem;
   }
 }
 
@@ -163,6 +186,7 @@ header {
   .list-item {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+    gap: 0.5rem;
     justify-content: center;
   }
   .item-details {
