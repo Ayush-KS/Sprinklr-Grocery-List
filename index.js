@@ -36,9 +36,18 @@ const clearForm = function () {
   itemQuantity.value = "";
 };
 
-const editItem = function (item) {
+const setAddButton = function () {
+  addItemButton.classList.remove("hidden");
+  updateItemButton.classList.add("hidden");
+};
+
+const setEditButton = function () {
   addItemButton.classList.add("hidden");
   updateItemButton.classList.remove("hidden");
+};
+
+const editItem = function (item) {
+  setEditButton();
   currentEditItem = item;
   itemTitle.value = item.querySelector(".item-title").innerHTML;
   itemQuantity.value = item.querySelector(".item-quantity").innerHTML.substr(1);
@@ -55,8 +64,8 @@ const updateItem = function () {
     alert("Please enter the quantity!");
     return;
   }
-  addItemButton.classList.remove("hidden");
-  updateItemButton.classList.add("hidden");
+
+  setAddButton();
   data = data.map((item) => {
     if (item.title == currentEditItem.querySelector(".item-title").innerHTML) {
       item.title = title;
@@ -74,13 +83,13 @@ const updateItem = function () {
 const deleteItem = function (item) {
   title = item.querySelector(".item-title").innerText;
   listBox.removeChild(item);
-  console.log(data);
-  console.log(title);
   data = data.filter((listItem) => {
     return listItem.title != title;
   });
-  console.log(data);
-  if (currentEditItem == item) clearForm();
+  if (currentEditItem == item) {
+    setAddButton();
+    clearForm();
+  }
   updateLocalStorage(data);
 };
 
@@ -123,7 +132,6 @@ const addItem = function () {
 };
 
 const renderList = function () {
-  if (!data) return;
   data.forEach((item) => {
     addListItemUtil(item);
   });
