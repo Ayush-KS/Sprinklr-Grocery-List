@@ -25,6 +25,18 @@ const clearForm = function () {
   itemQuantity.value = "";
 };
 
+const validateForm = function ({ title, quantity }) {
+  if (!title) {
+    alert("Please enter the title!");
+    return false;
+  }
+  if (!quantity || quantity < 0) {
+    alert("Please enter a valid quantity!");
+    return false;
+  }
+  return true;
+};
+
 // Finds the index of the item to be deleted/edited
 const findIndex = function (item) {
   let index = 0;
@@ -60,12 +72,7 @@ const beginEdit = function (item) {
 const updateItem = function () {
   const title = itemTitle.value.trim();
   const quantity = parseFloat(itemQuantity.value);
-  if (!title) {
-    alert("Please enter the title!");
-    return;
-  }
-  if (!quantity) {
-    alert("Please enter the quantity!");
+  if (!validateForm({ title, quantity })) {
     return;
   }
 
@@ -121,14 +128,10 @@ const addListeners = function (item) {
 const addItem = function () {
   const title = itemTitle.value.trim();
   const quantity = parseFloat(itemQuantity.value);
-  // if (!title) {
-  //   alert("Please enter the title!");
-  //   return;
-  // }
-  // if (!quantity || quantity < 0) {
-  //   alert("Please enter a valid quantity!");
-  //   return;
-  // }
+  if (!validateForm({ title, quantity })) {
+    return;
+  }
+
   addListeners(createItemNode({ title, quantity }));
   data.push({ title, quantity });
   updateLocalStorage(data);
