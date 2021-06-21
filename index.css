@@ -9,6 +9,17 @@ body {
   margin: 0;
 }
 
+.light-mode {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+#toggle-theme {
+  font-size: 0.7rem;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+
 /**************** Typography *************/
 * {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

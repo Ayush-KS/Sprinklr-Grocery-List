@@ -9,7 +9,11 @@
     <script defer src="./index.js"></script>
   </head>
   <body>
-    <header>Sprinklr's Groceries!</header>
+    <header>
+      Sprinklr's Groceries!
+      <span id="toggle-theme">Toggle!</span>
+    </header>
+
     <div class="container">
       <div id="add-item-container">
         <div class="box-title" id="form-title">Add Item</div>
@@ -24,7 +28,7 @@
             <input type="number" id="form_item-quantity" />
             <span class="error-text" id="quantity_error-text"></span>
           </div>
-          <div class="row">
+          <div class="row theme-resistant">
             <button id="btn_add-item">Add Item</button>
             <button id="btn_update-item" class="hidden">Update Item</button>
           </div>
@@ -33,7 +37,7 @@
       <div id="list-container">
         <div class="box-title">Grocery List</div>
         <div id="list-box-wrapper">
-          <ul id="list-box"></ul>
+          <ul id="list-box" class="theme-resistant"></ul>
         </div>
       </div>
     </div>

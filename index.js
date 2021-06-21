@@ -27,26 +27,31 @@ const clearForm = function () {
   itemQuantity.value = "";
 };
 
+// Adds outline and error message incase of invalid title
 const addTitleError = function () {
   itemTitle.classList.add("error-outline");
   itemTitleError.innerHTML = "Whoa there, an item's gotta have a name!";
 };
 
+// Removes outline and error message from title input
 const removeTitleError = function () {
   itemTitle.classList.remove("error-outline");
   itemTitleError.innerHTML = "";
 };
 
+// Adds outline and error message incase of invalid quantity
 const addQuantityError = function () {
   itemQuantity.classList.add("error-outline");
   itemQuantityError.innerHTML = "How much of it do you want?";
 };
 
+// Removes outline and error message from quantity input
 const removeQuantityError = function () {
   itemQuantity.classList.remove("error-outline");
   itemQuantityError.innerHTML = "";
 };
 
+// Checks if inputs are valid
 const validateForm = function ({ title, quantity }) {
   let errors = 0;
   if (!title) {
@@ -174,16 +179,24 @@ renderList();
 addItemButton.addEventListener("click", addItem);
 updateItemButton.addEventListener("click", updateItem);
 
+// Adding listeners to remove outlines and error messages during input
 itemTitle.addEventListener("keyup", removeTitleError);
 itemQuantity.addEventListener("keyup", removeQuantityError);
 
 // Adding listener for enter keypress
 document.addEventListener("keyup", (event) => {
-  if (event.keyCode == 13) {
+  if (event.key == "Enter") {
     if (currentEditItem) {
       updateItem();
     } else {
       addItem();
     }
   }
+});
+
+document.querySelector("#toggle-theme").addEventListener("click", () => {
+  document.documentElement.classList.toggle("light-mode");
+  document.querySelectorAll(".theme-resistant").forEach((element) => {
+    element.classList.toggle("light-mode");
+  });
 });
