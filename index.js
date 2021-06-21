@@ -3,6 +3,8 @@ const addItemButton = document.querySelector("#btn_add-item");
 const updateItemButton = document.querySelector("#btn_update-item");
 const itemTitle = document.querySelector("#form_item-title");
 const itemQuantity = document.querySelector("#form_item-quantity");
+const itemTitleError = document.querySelector("#title_error-text");
+const itemQuantityError = document.querySelector("#quantity_error-text");
 const formTitle = document.querySelector("#form-title");
 
 // Target item while editing
@@ -25,16 +27,37 @@ const clearForm = function () {
   itemQuantity.value = "";
 };
 
+const addTitleError = function () {
+  itemTitle.classList.add("error-outline");
+  itemTitleError.innerHTML = "Whoa there, an item's gotta have a name!";
+};
+
+const removeTitleError = function () {
+  itemTitle.classList.remove("error-outline");
+  itemTitleError.innerHTML = "";
+};
+
+const addQuantityError = function () {
+  itemQuantity.classList.add("error-outline");
+  itemQuantityError.innerHTML = "How much of it do you want?";
+};
+
+const removeQuantityError = function () {
+  itemQuantity.classList.remove("error-outline");
+  itemQuantityError.innerHTML = "";
+};
+
 const validateForm = function ({ title, quantity }) {
+  let errors = 0;
   if (!title) {
-    alert("Please enter the title!");
-    return false;
+    addTitleError();
+    errors++;
   }
   if (!quantity || quantity < 0) {
-    alert("Please enter a valid quantity!");
-    return false;
+    addQuantityError();
+    errors++;
   }
-  return true;
+  return errors == 0;
 };
 
 // Finds the index of the item to be deleted/edited
@@ -53,16 +76,15 @@ const setAddMode = function () {
   updateItemButton.classList.add("hidden");
 };
 
-// Replaces Add button with Update button
-const setEditMode = function () {
+// Sets up the Edit mode
+const beginEdit = function (item) {
+  // Removes form errors and replaces Add button with Update button
+  removeTitleError(), removeQuantityError();
   formTitle.innerHTML = "Edit Item";
   addItemButton.classList.add("hidden");
   updateItemButton.classList.remove("hidden");
-};
 
-// Sets up the Edit mode
-const beginEdit = function (item) {
-  setEditMode();
+  // Sets inputs to the values of target element
   currentEditItem = item;
   itemTitle.value = item.querySelector(".item-title").innerHTML;
   itemQuantity.value = item.querySelector(".item-quantity").innerHTML.substr(1);
@@ -92,6 +114,7 @@ const deleteItem = function (item) {
   listBox.removeChild(item);
 
   if (currentEditItem == item) {
+    removeQuantityError(), removeTitleError();
     setAddMode();
     clearForm();
   }
@@ -148,13 +171,11 @@ const renderList = function () {
 renderList();
 
 // Adding listeners to add and update buttons
-addItemButton.addEventListener("click", () => {
-  addItem();
-});
+addItemButton.addEventListener("click", addItem);
+updateItemButton.addEventListener("click", updateItem);
 
-updateItemButton.addEventListener("click", () => {
-  updateItem();
-});
+itemTitle.addEventListener("keyup", removeTitleError);
+itemQuantity.addEventListener("keyup", removeQuantityError);
 
 // Adding listener for enter keypress
 document.addEventListener("keyup", (event) => {
