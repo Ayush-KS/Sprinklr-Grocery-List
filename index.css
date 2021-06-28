@@ -17,6 +17,7 @@ body {
   font-size: 0.7rem;
   position: absolute;
   right: 0;
+  top: 7px;
   cursor: pointer;
 }
 
@@ -115,6 +116,7 @@ input:hover {
 header {
   text-align: center;
   font-size: 1.5rem;
+  position: relative;
   height: 5vh;
   line-height: 5vh;
   background-color: rgba(100%, 100%, 100%, 10%);
