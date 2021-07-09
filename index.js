@@ -25,6 +25,8 @@ const updateLocalStorage = function () {
 const clearForm = function () {
   itemTitle.value = "";
   itemQuantity.value = "";
+  itemTitle.setAttribute("value", "");
+  itemQuantity.setAttribute("value", "");
 };
 
 // Adds outline and error message incase of invalid title
@@ -42,7 +44,7 @@ const removeTitleError = function () {
 // Adds outline and error message incase of invalid quantity
 const addQuantityError = function () {
   itemQuantity.classList.add("error-outline");
-  itemQuantityError.innerHTML = "How much of it do you want?";
+  itemQuantityError.innerHTML = "Please add a valid quantity!";
 };
 
 // Removes outline and error message from quantity input
@@ -93,6 +95,8 @@ const beginEdit = function (item) {
   currentEditItem = item;
   itemTitle.value = item.querySelector(".item-title").innerHTML;
   itemQuantity.value = item.querySelector(".item-quantity").innerHTML.substr(1);
+  itemTitle.setAttribute("value", itemTitle.value);
+  itemQuantity.setAttribute("value", itemQuantity.value);
 };
 
 // Updates the selected item
@@ -160,8 +164,23 @@ const addItem = function () {
     return;
   }
 
-  addListeners(createItemNode({ title, quantity }));
-  data.push({ title, quantity });
+  let present = false;
+
+  data.forEach((item, index) => {
+    if (title.toLowerCase() === item.title.toLowerCase()) {
+      data[index].quantity += quantity;
+      const quantities = document.querySelectorAll(".item-quantity");
+      quantities[index].innerHTML = "x" + data[index].quantity;
+      present = true;
+      return;
+    }
+  });
+
+  if (!present) {
+    addListeners(createItemNode({ title, quantity }));
+    data.push({ title, quantity });
+  }
+
   updateLocalStorage(data);
   clearForm();
 };
@@ -196,7 +215,15 @@ document.addEventListener("keyup", (event) => {
 
 document.querySelector("#toggle-theme").addEventListener("click", () => {
   document.documentElement.classList.toggle("light-mode");
-  document.querySelectorAll(".theme-resistant").forEach((element) => {
-    element.classList.toggle("light-mode");
+  document.querySelectorAll(".theme-resistant").forEach((ele) => {
+    ele.classList.toggle("light-mode");
+  });
+});
+
+const inputs = document.querySelectorAll("input");
+
+inputs.forEach((input) => {
+  input.addEventListener("keyup", (e) => {
+    input.setAttribute("value", e.target.value);
   });
 });
